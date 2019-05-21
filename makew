@@ -9,6 +9,6 @@ echo "Starting new build."\
  &&\
  echo "Compiled rust target. Now creating nro."\
  &&\
- elf2nro target/aarch64-none-elf/release/libnxbin.nx_elf libnxbin.nro\
+ cp target/aarch64-none-elf/release/libnxbin.nx_elf plugin.elf\
  &&\
  echo "Finished making nro."

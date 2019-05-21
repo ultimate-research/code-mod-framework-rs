@@ -1,39 +1,34 @@
-use libc::{c_void, c_char};
-use std::ffi::CString;
+use libc::{c_void, size_t};
+use super::IntoVoid;
+use std::num::NonZeroU64;
 
 #[link(name="saltysd")]
 extern "C" {
-    fn S_GetSymbolAddr(base: *const c_void, name: *const c_char) -> u64;
-    fn S_FindSymbol(name: *const c_char) -> u64;
-    fn S_FindSymbolBuiltin(name: *const c_char) -> u64;
-    fn S_RegisterModule(base: *const c_void);
-    fn S_RegisterBuiltinModule(base: *const c_void);
-    fn S_DynamicLinkModule(base: *const c_void);
-    fn S_ReplaceModuleImport(base: *const c_void, name: *const c_char, new_replace: *const c_void);
-    fn S_ReplaceImport(name: *const c_char, new_replace: *const c_void);
+    fn S_getCodeStart() -> u64;
+    fn S_getCodeSize() -> u64;
+    fn S_findCode(code: *const u8, size: size_t) -> u64;
 }
 
-pub fn get_symbol_addr<S: AsRef<str>>(base: *const c_void, name: S) -> u64 {
+pub fn get_code_start() -> *const c_void {
     unsafe {
-        S_GetSymbolAddr(base, CString::new(name.as_ref()).unwrap().as_ptr())
+        S_getCodeStart() as *const c_void
     }
 }
 
-pub fn find_symbol<S: AsRef<str>>(name: S) -> u64 {
+pub fn get_code_size() -> u64 {
     unsafe {
-        S_FindSymbol(CString::new(name.as_ref()).unwrap().as_ptr())
+        S_getCodeSize()
     }
 }
 
-pub fn find_symbol_builtin<S: AsRef<str>>(name: S) -> u64 {
+pub fn find_code(code: &[u8]) -> Option<NonZeroU64> {
     unsafe {
-        S_FindSymbolBuiltin(CString::new(name.as_ref()).unwrap().as_ptr())
+        NonZeroU64::new(S_findCode(code.as_ptr(), code.len() as size_t))
     }
 }
 
-pub fn register_module(module: *const c_void) {
+pub fn find_code_raw<T: IntoVoid>(code: T, size: size_t) -> Option<NonZeroU64> {
     unsafe {
-        S_RegisterModule(base);
+        NonZeroU64::new(S_findCode(code.into() as *const u8, size))
     }
 }
-

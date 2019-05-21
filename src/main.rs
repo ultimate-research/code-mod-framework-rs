@@ -2,10 +2,6 @@
 #![feature(linkage)]
 
 extern crate libnx_rs;
-use libnx_rs::libnx::*;
-use libnx_rs::{service, LibnxError};
-use libnx_rs::ipc::{IpcCommandHeader, RawIpcArgs};
-use libnx_rs::console::ConsoleHandle;
 extern crate libc;
 
 use std::result::Result;
@@ -14,14 +10,16 @@ use std::fs::OpenOptions;
 use std::io::Write;
 use std::io;
 use std::os::unix::io::AsRawFd;
-use std::panic;
-use std::ptr;
-use std::ffi::CString;
 
 mod saltynx;
 
 pub fn main() {
-    saltynx::core::find_symbol("test");
+    if let Some(ver_ptr) = saltynx::find_code(b"Ver. %d.%d.%d") {
+        match saltynx::memcpy(ver_ptr, b"noice v%d%d%d") {
+            Ok(_) => {}
+            Err(_) => {}
+        }
+    }
 }
 
 pub fn redirect_stdout (filename : &str) -> Result<File, io::Error> {
