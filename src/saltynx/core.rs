@@ -1,14 +1,16 @@
-use libc::{c_void, size_t};
-use super::IntoVoid;
-use std::num::NonZeroU64;
+//use libc::{c_void, size_t};
+pub type size_t = u64;
+//use super::IntoVoid;
+//use core::num::NonZeroU64;
 
 #[link(name="saltysd")]
 extern "C" {
     fn S_getCodeStart() -> u64;
     fn S_getCodeSize() -> u64;
-    fn S_findCode(code: *const u8, size: size_t) -> u64;
+    pub fn S_findCode(code: *const u8, size: size_t) -> u64;
 }
 
+/*
 pub fn get_code_start() -> *const c_void {
     unsafe {
         S_getCodeStart() as *const c_void
@@ -31,4 +33,4 @@ pub fn find_code_raw<T: IntoVoid>(code: T, size: size_t) -> Option<NonZeroU64> {
     unsafe {
         NonZeroU64::new(S_findCode(code.into() as *const u8, size))
     }
-}
+}*/

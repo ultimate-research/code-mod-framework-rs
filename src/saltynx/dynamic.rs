@@ -1,5 +1,7 @@
-use libc::{c_void, c_char};
-use super::{IntoVoid, IntoCString};
+//use libc::{c_void, c_char};
+pub struct c_void;
+pub type c_char = u8;
+//use super::{IntoVoid, IntoCString};
 
 #[link(name="saltysd")]
 extern "C" {
@@ -12,7 +14,7 @@ extern "C" {
     fn S_ReplaceModuleImport(base: *const c_void, name: *const c_char, new_replace: *const c_void);
     fn S_ReplaceImport(name: *const c_char, new_replace: *const c_void);
 }
-
+/*
 pub fn get_symbol_addr<T, S>(base: T, name: S) -> u64
     where S: IntoCString,
           T: IntoVoid {
@@ -77,4 +79,4 @@ fn replace_import<S, V>(name: S, new_replace: V)
             new_replace.into()
         )
     }
-}
+}*/

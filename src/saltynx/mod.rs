@@ -1,6 +1,6 @@
-use std::ffi::{CStr, CString};
-use libc::{c_void, c_char};
-use std::num::NonZeroU64;
+//use core::ffi::{CStr, CString};
+//use libc::{c_void, c_char};
+//use core::num::NonZeroU64;
 
 pub mod core;
 pub mod ipc;
@@ -10,8 +10,9 @@ pub use self::core::*;
 pub use self::ipc::*;
 pub use self::dynamic::*;
 
-pub type SwitchResult = libnx_rs::libnx::Result;
+//pub type SwitchResult = libnx_rs::libnx::Result;
 
+/*
 #[derive(Debug, Clone)]
 pub struct SwitchError {
     pub result: SwitchResult
@@ -83,4 +84,4 @@ impl IntoCString for CStr {
     fn into_cstring(&self) -> CString {
         CString::new(self.to_bytes()).unwrap()
     }
-}
+}*/

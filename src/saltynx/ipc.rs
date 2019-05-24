@@ -1,16 +1,19 @@
-use libc::{c_void, size_t};
-use super::*;
-use libnx_rs::libnx::Handle;
+//use libc::{c_void, size_t};
+pub struct c_void;
+pub type size_t = u64;
+pub type SwitchResult = u32;
+//use super::*;
+//use libnx_rs::libnx::Handle;
 
 extern "C" {
     fn S_Init();
     fn S_Deinit() -> SwitchResult;
     fn S_Term() -> SwitchResult;
     fn S_Restore() -> SwitchResult;
-    fn S_Memcpy(to: *const c_void, from: *const c_void, size: size_t) -> SwitchResult;
-    fn S_GetSDCard(retrieve: *mut Handle) -> SwitchResult;
+    pub fn S_Memcpy(to: *const c_void, from: *const c_void, size: size_t) -> SwitchResult;
+//    fn S_GetSDCard(retrieve: *mut Handle) -> SwitchResult;
 }
-
+/*
 pub fn init() {
     unsafe { S_Init() }
 }
@@ -69,4 +72,4 @@ pub fn get_sd_card() -> Result<Handle, SwitchError> {
             handle
         )
     }
-}
+}*/
