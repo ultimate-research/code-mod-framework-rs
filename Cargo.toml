@@ -28,15 +28,15 @@ lto = true
 debug = true
 opt-level = 0
 
-[dependencies.libnx-rs]
-git = "https://github.com/ischeinkman/libnx-rs"
-branch = "master"
+#[dependencies.libnx-rs]
+#git = "https://github.com/ischeinkman/libnx-rs"
+#branch = "master"
 
-[dependencies.libc]
-version = "0.2.48"
+#[dependencies.libc]
+#version = "0.2.48"
 
-[dependencies.rand]
-version = "0.5"
+#[dependencies.rand]
+#version = "0.5"
 
 #[dependencies.piston]
 #version = "0.37"

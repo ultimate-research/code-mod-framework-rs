@@ -1,27 +1,57 @@
 #![allow(dead_code)]
-#![feature(linkage)]
+#![feature(lang_items, linkage, start, no_core)]
+#![no_core]
 
-extern crate libnx_rs;
-extern crate libc;
+//extern crate libnx_rs;
+//extern crate libc;
 
-use std::result::Result;
+/*use std::result::Result;
 use std::fs::File;
 use std::fs::OpenOptions;
 use std::io::Write;
 use std::io;
 use std::os::unix::io::AsRawFd;
-
+*/
 mod saltynx;
 
-pub fn main() {
-    if let Some(ver_ptr) = saltynx::find_code(b"Ver. %d.%d.%d") {
+#[lang="sized"]
+trait Sized {}
+
+#[lang="copy"]
+trait Copy {}
+
+#[lang="freeze"]
+trait Freeze {}
+
+//#[panic_handler] fn panic(_: &core::panic::PanicInfo) -> ! {loop{}}
+#[lang = "eh_personality"] extern fn eh_personality() {}
+
+#[start]
+pub fn main(a: isize, b: *const *const u8) -> isize {
+    /*if let Some(ver_ptr) = saltynx::find_code(b"Ver. %d.%d.%d") {
         match saltynx::memcpy(ver_ptr, b"noice v%d%d%d") {
             Ok(_) => {}
-            Err(_) => {}
+            Err(_) => { loop {} }
         }
+    } else {
+        loop {}
+    }*/
+    unsafe {
+        const ver_string: &'static [u8; 13] = b"Ver. %d.%d.%d";
+        const new_ver: &'static [u8; 13] = b"noice v%d%d%d";
+        let ver_ptr = saltynx::S_findCode(
+            ver_string as *const u8,
+            13
+        );
+        saltynx::S_Memcpy(
+            ver_ptr as _,
+            new_ver as *const u8 as _,
+            13
+        );
     }
+    0
 }
-
+/*
 pub fn redirect_stdout (filename : &str) -> Result<File, io::Error> {
     let mut outfile = OpenOptions::new()
         .write(true)
@@ -59,4 +89,4 @@ pub fn redirect_stderr (filename : &str) -> Result<File, io::Error> {
         Ok(outfile) 
     }
 }
-
+*/
