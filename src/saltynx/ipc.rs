@@ -1,6 +1,6 @@
 use libc::{c_void, size_t};
 use super::*;
-use libnx_rs::libnx::Handle;
+use nx::sys::Handle;
 
 extern "C" {
     fn S_Init();

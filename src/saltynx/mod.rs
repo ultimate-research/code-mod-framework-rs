@@ -10,7 +10,7 @@ pub use self::core::*;
 pub use self::ipc::*;
 pub use self::dynamic::*;
 
-pub type SwitchResult = libnx_rs::libnx::Result;
+pub type SwitchResult = u64;
 
 #[derive(Debug, Clone)]
 pub struct SwitchError {

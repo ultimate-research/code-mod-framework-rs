@@ -1,7 +1,7 @@
 #![allow(dead_code)]
 #![feature(linkage)]
 
-extern crate libnx_rs;
+extern crate nx;
 extern crate libc;
 
 use std::result::Result;

@@ -28,7 +28,7 @@ lto = true
 debug = true
 opt-level = 0
 
-[dependencies.libnx-rs]
+[dependencies.nx]
 git = "https://github.com/ischeinkman/libnx-rs"
 branch = "master"
 
